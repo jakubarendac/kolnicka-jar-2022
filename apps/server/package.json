@@ -4,8 +4,11 @@
   "description": "",
   "main": "build/index.js",
   "scripts": {
-    "start": "nodemon src/index.ts",
-    "lint": "eslint . --ext .ts"
+    "start": "node .",
+    "start:local": "nodemon src/index.ts",
+    "lint": "eslint . --ext .ts",
+    "build": "tsc",
+    "postinstall": "npm run build"
   },
   "dependencies": {
     "apollo-server": "^3.6.3",
