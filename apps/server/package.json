@@ -7,9 +7,6 @@
     "start": "nodemon src/index.ts",
     "lint": "eslint . --ext .ts"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "express": "^4.17.2"
   },
@@ -24,5 +21,8 @@
     "nodemon": "^2.0.15",
     "ts-node": "^10.5.0",
     "typescript": "^4.5.5"
-  }
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
