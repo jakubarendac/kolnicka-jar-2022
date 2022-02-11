@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "lerna run lint --stream",
-    "start": "lerna run start --stream",
+    "start": "lerna run start --scope client --stream & lerna run start:local --scope server --stream",
     "bootstrap": "lerna bootstrap"
   },
   "repository": {

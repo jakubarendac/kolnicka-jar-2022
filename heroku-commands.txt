@@ -4,5 +4,18 @@ heroku buildpacks:add -a kolnicka-jar-2022-test-server https://github.com/lstoll
 heroku buildpacks:add -a kolnicka-jar-2022-test-client mars/create-react-app
 heroku buildpacks:add -a kolnicka-jar-2022-test-client https://github.com/lstoll/heroku-buildpack-monorepo -i 1
 
-heroku config:set -a kolnicka-jar-2022-test-server APP_BASE=apps/server
-heroku config:set -a kolnicka-jar-2022-test-client APP_BASE=apps/client APOLLO_SERVER_URL=https://kolnicka-jar-2022-test-server.herokuapp.com/
+heroku config:set -a kolnicka-jar-2022-test-server APP_BASE=apps/server NODE_ENV=development
+heroku config:set -a kolnicka-jar-2022-test-client APP_BASE=apps/client APOLLO_SERVER_URL=https://kolnicka-jar-2022-test-server.herokuapp.com
+heroku config:set NODE_ENV=development
+git remote add heroku-kolnicka-server https://git.heroku.com/kolnicka-jar-2022-test-server.git
+git remote add heroku-kolnicka-client https://git.heroku.com/kolnicka-jar-2022-test-client.git
+git push heroku-kolnicka-server master
+git push heroku-kolnicka-client master
+
+heroku git:remote -a heroku-kolnicka-jar-2022-test-server
+heroku git:remote -a heroku-kolnicka-jar-2022-test-client
+
+
+heroku config:set -a kolnicka-jar-2022-test-server NODE_ENV=development
+
+heroku config:unset -a kolnicka-jar-2022-test-client APOLLO_SERVER_URL=https://kolnicka-jar-2022-test-server.herokuapp.com
