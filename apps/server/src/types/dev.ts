@@ -1,4 +1,4 @@
-import PodcastApi from "../data/PodcastApi";
+import { PodcastApi } from "../data/PodcastApi";
 
 export interface ResolverContext {
   dataSources: {

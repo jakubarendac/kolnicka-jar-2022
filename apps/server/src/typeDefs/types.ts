@@ -18,11 +18,19 @@ export const podcastType = gql`
   }
 `;
 
+export const searchResult = gql`
+  type SearchResult {
+    podcasts: [Podcast]!
+    offset: Int
+  }
+`;
+
 export const podcastDetailType = gql`
   type PodcastDetail {
     id: String!
     title: String!
     description: String!
     episodes: [Episode]
+    next: String
   }
 `;

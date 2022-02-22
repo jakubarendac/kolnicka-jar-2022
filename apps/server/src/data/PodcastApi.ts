@@ -1,6 +1,6 @@
 import { RESTDataSource, RequestOptions } from "apollo-datasource-rest";
-import { PodcastApiSearchResult } from "../types/api";
 
+import { PodcastApiSearchResult } from "../types/api";
 import {
   mapPodcastDetailResult,
   mapPodcastSearchResult,
@@ -16,17 +16,22 @@ export class PodcastApi extends RESTDataSource {
     request.headers.set("X-ListenAPI-Key", process.env.PODCAST_API_KEY);
   };
 
-  getSearch = async (q: string) => {
-    const result = (await this.get("/search", {
+  getSearch = async (q: string, offset?: number) => {
+    const result = (await this.get(`/search`, {
       q,
       type: "podcast",
+      offset,
     })) as PodcastApiSearchResult;
 
     return mapPodcastSearchResult(result);
   };
 
-  getPodcastDetailById = async (id: string) => {
-    const result = await this.get(`/podcasts/${encodeURIComponent(id)}`);
+  getPodcastDetailById = async (id: string, next?: string) => {
+    const result = await this.get(
+      `/podcasts/${encodeURIComponent(id)}${
+        next ? `?next_episode_pub_date=${next}` : ""
+      }`
+    );
 
     return mapPodcastDetailResult(result);
   };
