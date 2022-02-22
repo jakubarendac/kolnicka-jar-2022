@@ -5,7 +5,7 @@ type PodcastApiSearchResult = {
   listen_score_global_rank: string;
 };
 
-type PodcastApiSearchResultAPI = {
+export type PodcastApiSearchResultAPI = {
   results: Array<PodcastApiSearchResult>;
 };
 
@@ -16,11 +16,9 @@ type PodcastApiEpisodeResultAPI = {
   audio_length_sec: number;
 };
 
-type PodcastApiPodcastDetailResultAPI = {
+export type PodcastApiPodcastDetailResultAPI = {
   id: string;
   title: string;
   description: string;
   episodes: Array<PodcastApiEpisodeResultAPI>;
 };
-
-export { PodcastApiSearchResultAPI, PodcastApiPodcastDetailResultAPI };

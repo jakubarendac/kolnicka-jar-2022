@@ -1,6 +1,2 @@
-import {
-  PodcastApiPodcastDetailResultAPI,
-  PodcastApiSearchResultAPI,
-} from "./api";
-
-export { PodcastApiSearchResultAPI, PodcastApiPodcastDetailResultAPI };
+export * from "./api";
+export * from "./dev";

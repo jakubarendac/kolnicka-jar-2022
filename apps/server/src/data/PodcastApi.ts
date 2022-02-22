@@ -1,8 +1,11 @@
 import { RESTDataSource, RequestOptions } from "apollo-datasource-rest";
 
-import { mapPodcastDetailResult, mapPodcastSearchResult } from "./helpers";
+import {
+  mapPodcastDetailResult,
+  mapPodcastSearchResult,
+} from "../utils/helpers";
 
-class PodcastApi extends RESTDataSource {
+export class PodcastApi extends RESTDataSource {
   constructor() {
     super();
     this.baseURL = process.env.PODCAST_API_BASE_URL;
@@ -27,5 +30,3 @@ class PodcastApi extends RESTDataSource {
     return mapPodcastDetailResult(result);
   };
 }
-
-export default PodcastApi;

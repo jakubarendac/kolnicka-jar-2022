@@ -1,9 +1,9 @@
 import "dotenv/config";
 import { ApolloServer } from "apollo-server";
 
-import PodcastApi from "./data/podcastApi";
-import resolvers from "./resolvers";
+import resolvers from "./graphql";
 import typeDefs from "./typeDefs";
+import { PodcastApi } from "./data";
 
 // The ApolloServer constructor requires two parameters: your schema
 // definition and your set of resolvers.

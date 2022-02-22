@@ -1,7 +1,7 @@
 import {
   PodcastApiPodcastDetailResultAPI,
   PodcastApiSearchResultAPI,
-} from "../../types";
+} from "../types";
 
 const mapPodcastSearchResult = (result: PodcastApiSearchResultAPI) =>
   result.results?.map((result) => ({

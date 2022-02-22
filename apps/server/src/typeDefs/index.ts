@@ -1,6 +1,6 @@
-import query from "./query";
+import { queries } from "./queries";
 import { episodeType, podcastDetailType, podcastType } from "./types";
 
-const typeDefs = [query, podcastType, podcastDetailType, episodeType];
+const typeDefs = [queries, podcastType, podcastDetailType, episodeType];
 
 export default typeDefs;
