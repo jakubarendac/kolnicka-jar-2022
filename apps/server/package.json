@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node .",
     "start:local": "nodemon src/index.ts",
+    "dev": "nodemon src/index.ts",
     "lint": "eslint . --ext .ts",
     "build": "tsc",
     "postinstall": "npm run build"
