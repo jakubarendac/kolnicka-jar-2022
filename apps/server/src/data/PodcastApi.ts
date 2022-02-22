@@ -1,4 +1,5 @@
 import { RESTDataSource, RequestOptions } from "apollo-datasource-rest";
+import { PodcastApiSearchResult } from "../types/api";
 
 import {
   mapPodcastDetailResult,
@@ -16,10 +17,10 @@ export class PodcastApi extends RESTDataSource {
   };
 
   getSearch = async (q: string) => {
-    const result = await this.get("/search", {
+    const result = (await this.get("/search", {
       q,
       type: "podcast",
-    });
+    })) as PodcastApiSearchResult;
 
     return mapPodcastSearchResult(result);
   };

@@ -1,17 +1,13 @@
-import {
-  PodcastApiPodcastDetailResultAPI,
-  PodcastApiSearchResultAPI,
-} from "../types";
+import { PodcastApiSearchResult, PodcastDetailResult } from "../types/api";
 
-const mapPodcastSearchResult = (result: PodcastApiSearchResultAPI) =>
+const mapPodcastSearchResult = (result: PodcastApiSearchResult) =>
   result.results?.map((result) => ({
     id: result.id,
     title: result.title_original,
     description: result.description_original,
-    score: result.listen_score_global_rank,
   }));
 
-const mapPodcastDetailResult = (result: PodcastApiPodcastDetailResultAPI) => ({
+const mapPodcastDetailResult = (result: PodcastDetailResult) => ({
   ...result,
   episodes: result?.episodes?.map((episode) => ({
     ...episode,
