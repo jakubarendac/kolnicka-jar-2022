@@ -1,17 +1,7 @@
+import { mutations } from "./mutations";
 import { queries } from "./queries";
-import {
-  episodeType,
-  podcastDetailType,
-  podcastType,
-  searchResult,
-} from "./types";
+import { SearchResult, podcastDetailResult } from "./types";
 
-const typeDefs = [
-  queries,
-  podcastType,
-  podcastDetailType,
-  episodeType,
-  searchResult,
-];
+const typeDefs = [queries, mutations, SearchResult, podcastDetailResult];
 
 export default typeDefs;

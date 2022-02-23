@@ -1,12 +1,15 @@
+import { Database, User } from "../data/Database";
 import { PodcastApi } from "../data/PodcastApi";
 
 export interface ResolverContext {
+  user?: User;
   dataSources: {
     podcastApi: PodcastApi;
+    database: Database;
   };
 }
 
-export type Query<Args = unknown, Parent = unknown, Result = unknown> = (
+export type Action<Args = unknown, Parent = unknown, Result = unknown> = (
   parent: Parent,
   args: Args,
   context: ResolverContext
