@@ -1,20 +1,6 @@
 import { gql } from "apollo-server";
 
 export const SearchResult = gql`
-  type Podcast {
-    id: String!
-    image: String!
-    thumbnail: String!
-    listen_score: Int!
-    title_original: String!
-    listennotes_url: String!
-    title_highlighted: String!
-    publisher_original: String!
-    publisher_highlighted: String!
-    listen_score_global_rank: String!
-    genre_ids: [Int]!
-  }
-
   type Results {
     id: String!
     rss: String!
@@ -33,7 +19,6 @@ export const SearchResult = gql`
     description_original: String!
     description_highlighted: String!
     transcripts_highlighted: [String]!
-    podcast: Podcast
     is_liked: Boolean
   }
 
@@ -105,8 +90,8 @@ export const podcastDetailResult = gql`
     total_episodes: Int!
     listennotes_url: String!
     explicit_content: Boolean!
-    latest_pub_date_ms: Int!
-    earliest_pub_date_ms: Int!
+    latest_pub_date_ms: Float!
+    earliest_pub_date_ms: Float!
     next_episode_pub_date: Float!
     listen_score_global_rank: String!
     looking_for: LookingFor!

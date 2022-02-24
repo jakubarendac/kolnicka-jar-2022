@@ -14,7 +14,6 @@ export interface Result {
   link: string;
   audio: string;
   image: string;
-  podcast: Podcast;
   itunes_id: number;
   thumbnail: string;
   pub_date_ms: number;
@@ -27,20 +26,6 @@ export interface Result {
   description_original: string;
   description_highlighted: string;
   transcripts_highlighted: any[];
-}
-
-export interface Podcast {
-  id: string;
-  image: string;
-  genre_ids: number[];
-  thumbnail: string;
-  listen_score: number;
-  title_original: string;
-  listennotes_url: string;
-  title_highlighted: string;
-  publisher_original: string;
-  publisher_highlighted: string;
-  listen_score_global_rank: string;
 }
 
 // Podcast detail
