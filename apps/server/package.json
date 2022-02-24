@@ -17,7 +17,7 @@
     "dotenv": "^16.0.0",
     "express": "^4.17.2",
     "graphql": "^16.3.0",
-    "realm": "^10.13.0"
+    "simple-json-db": "^1.2.3"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",

@@ -33,7 +33,8 @@ export const SearchResult = gql`
     description_original: String!
     description_highlighted: String!
     transcripts_highlighted: [String]!
-    podcast: Podcast!
+    podcast: Podcast
+    is_liked: Boolean
   }
 
   type SearchResult {
@@ -106,7 +107,7 @@ export const podcastDetailResult = gql`
     explicit_content: Boolean!
     latest_pub_date_ms: Int!
     earliest_pub_date_ms: Int!
-    next_episode_pub_date: Int!
+    next_episode_pub_date: Float!
     listen_score_global_rank: String!
     looking_for: LookingFor!
     genre_ids: [Int]!

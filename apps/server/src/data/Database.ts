@@ -1,55 +1,46 @@
 import path from "path";
 
+// @tsignore
+import JSONDB from "simple-json-db";
 import { DataSource, DataSourceConfig } from "apollo-datasource";
-import Realm from "realm";
 
 import { ResolverContext } from "../types";
 
-export class User {
-  public static schema: Realm.ObjectSchema = {
-    name: "User",
-    primaryKey: "userName",
-    properties: {
-      userName: "string",
-      token: "string",
-      likes: "string[]",
-    },
-  };
-
+export interface User {
   userName: string;
-  token: string;
   likes: string[];
 }
 
-export const initRealm = () => {
-  return Realm.open({
-    path: path.join(__dirname, "localdata"),
-    schema: [User],
-  });
-};
-
 export class Database extends DataSource {
   context: ResolverContext;
-  realm: Realm;
+  db: JSONDB;
+
+  constructor() {
+    super();
+    this.db = new JSONDB(path.join(__dirname, "localdata.db"));
+  }
 
   override async initialize(config: DataSourceConfig<ResolverContext>) {
     this.context = config.context;
-    this.realm = await initRealm();
   }
 
   getUserToken(userName: string) {
-    let user = this.realm.objectForPrimaryKey<User>("User", userName);
+    if (this.db.has(userName)) {
+      return this.db.get(userName);
+    } else {
+      const newToken = Date.now().toString();
 
-    if (!user) {
-      this.realm.write(() => {
-        user = this.realm.create<User>(User.schema.name, {
-          userName: userName,
-          token: Date.now().toString(),
-          likes: [],
-        });
+      this.db.set(userName, newToken as unknown as object);
+      this.db.set(newToken, {
+        userName,
+        likes: [],
       });
-    }
 
-    return user.token;
+      return newToken;
+    }
+  }
+
+  getUserByToken(token: string) {
+    return this.db.get(token) as User;
   }
 }

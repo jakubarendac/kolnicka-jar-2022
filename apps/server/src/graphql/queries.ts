@@ -1,5 +1,6 @@
 import { AuthenticationError } from "apollo-server";
-import { Action } from "../types";
+
+import { Action, Podcast } from "../types";
 
 // Podcast search query
 
@@ -11,9 +12,9 @@ interface PodcastsQueryArgs {
 export const podcastsQuery: Action<PodcastsQueryArgs> = async (
   _,
   { q, offset },
-  { dataSources, user }
+  { dataSources, userToken }
 ) => {
-  if (!user) {
+  if (!userToken) {
     throw new AuthenticationError("Unauthorized");
   }
 
@@ -30,10 +31,34 @@ interface PodcastDetailQueryArgs {
 export const podcastDetailQuery: Action<PodcastDetailQueryArgs> = async (
   _,
   { id, next },
-  { dataSources, user }
+  { dataSources, userToken }
 ) => {
-  if (!user) {
+  if (!userToken) {
     throw new AuthenticationError("Unauthorized");
   }
   return dataSources.podcastApi.getPodcastDetailById(id, next);
+};
+
+// token query
+
+export interface LoginQueryArgs {
+  userName: string;
+}
+
+export const tokenQuery: Action<LoginQueryArgs> = (_, args, context) => {
+  return context.dataSources.database.getUserToken(args.userName);
+};
+
+// is liked
+export const isLikedQuery: Action<undefined, Podcast> = (
+  podcast,
+  _,
+  context
+) => {
+  if (!context.userToken) {
+    throw new AuthenticationError("Unauthorized");
+  }
+
+  const user = context.dataSources.database.getUserByToken(context.userToken);
+  return user.likes.includes(podcast.id);
 };

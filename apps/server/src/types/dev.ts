@@ -1,8 +1,8 @@
-import { Database, User } from "../data/Database";
+import { Database } from "../data/Database";
 import { PodcastApi } from "../data/PodcastApi";
 
 export interface ResolverContext {
-  user?: User;
+  userToken?: string;
   dataSources: {
     podcastApi: PodcastApi;
     database: Database;
