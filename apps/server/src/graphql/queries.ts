@@ -1,6 +1,6 @@
 import { AuthenticationError } from "apollo-server";
 
-import { Action, Result } from "../types";
+import { Action, PodcastDetailResult, Result } from "../types";
 
 // Podcast search query
 
@@ -50,7 +50,7 @@ export const tokenQuery: Action<LoginQueryArgs> = (_, args, context) => {
 };
 
 // is liked
-export const isLikedQuery: Action<undefined, Result> = (
+export const isLikedQuery: Action<undefined, Result | PodcastDetailResult> = (
   podcast,
   _,
   context

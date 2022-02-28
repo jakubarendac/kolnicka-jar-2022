@@ -18,6 +18,9 @@ const rootReslver = {
   Results: {
     is_liked: isLikedQuery,
   },
+  PodcastDetailResult: {
+    is_liked: isLikedQuery,
+  },
 };
 
 export default rootReslver;

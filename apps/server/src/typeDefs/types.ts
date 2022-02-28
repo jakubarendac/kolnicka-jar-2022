@@ -98,5 +98,6 @@ export const podcastDetailResult = gql`
     genre_ids: [Int]!
     episodes: [Episodes]!
     extra: Extra!
+    is_liked: Boolean
   }
 `;
