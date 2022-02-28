@@ -6,23 +6,29 @@ export interface LikeMutationArgs {
   podcastId: string;
 }
 
-export const likeMutation: Action<LikeMutationArgs> = (_, args, context) => {
-  if (!context.userToken) {
+export const likeMutation: Action<LikeMutationArgs> = async (
+  _,
+  args,
+  context
+) => {
+  if (!context.user) {
     throw new AuthenticationError("Unauthorized");
   }
 
-  const user = context.dataSources.database.getUserByToken(context.userToken);
-
-  if (user.likes.includes(args.podcastId)) {
+  if (context.user.likes.some((e) => e.id === args.podcastId)) {
     context.dataSources.database.db.set(context.userToken, {
-      ...user,
-      likes: user.likes.filter((e) => e !== args.podcastId),
+      ...context.user,
+      likes: context.user.likes.filter((e) => e.id !== args.podcastId),
     });
 
     return false;
   } else {
-    user.likes.push(args.podcastId);
-    context.dataSources.database.db.set(context.userToken, user);
+    const podcast = await context.dataSources.podcastApi.getPodcastDetailById(
+      args.podcastId
+    );
+
+    context.user.likes.push(podcast);
+    context.dataSources.database.db.set(context.userToken, context.user);
 
     return true;
   }

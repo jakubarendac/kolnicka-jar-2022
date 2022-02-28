@@ -17,8 +17,10 @@ const init = async () => {
     context: ({ req }) => {
       const token = req.headers.authorization;
 
-      if (db.db.has(token)) {
-        return { userToken: token };
+      const user = db.getUserByToken(token);
+
+      if (user) {
+        return { user, userToken: token };
       }
     },
     dataSources: () => ({

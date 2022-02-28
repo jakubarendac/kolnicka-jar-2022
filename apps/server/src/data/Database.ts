@@ -4,11 +4,11 @@ import path from "path";
 import JSONDB from "simple-json-db";
 import { DataSource, DataSourceConfig } from "apollo-datasource";
 
-import { ResolverContext } from "../types";
+import { PodcastDetailResult, ResolverContext } from "../types";
 
 export interface User {
   userName: string;
-  likes: string[];
+  likes: PodcastDetailResult[];
 }
 
 export class Database extends DataSource {

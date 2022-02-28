@@ -59,6 +59,5 @@ export const isLikedQuery: Action<undefined, Result> = (
     throw new AuthenticationError("Unauthorized");
   }
 
-  const user = context.dataSources.database.getUserByToken(context.userToken);
-  return user.likes.includes(podcast.id);
+  return context.user.likes.some((e) => e.id === podcast.id);
 };
