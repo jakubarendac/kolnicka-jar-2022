@@ -61,3 +61,11 @@ export const isLikedQuery: Action<undefined, Result | PodcastDetailResult> = (
 
   return context.user.likes.some((e) => e.id === podcast.id);
 };
+
+export const favoritesQuery: Action = (_, __, context) => {
+  if (!context.user) {
+    throw new AuthenticationError("Unauthorized");
+  }
+
+  return context.user.likes;
+};

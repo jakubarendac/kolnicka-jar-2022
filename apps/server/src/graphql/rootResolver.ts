@@ -1,5 +1,6 @@
 import { likeMutation } from "./mutations";
 import {
+  favoritesQuery,
   isLikedQuery,
   podcastDetailQuery,
   podcastsQuery,
@@ -11,6 +12,7 @@ const rootReslver = {
     podcasts: podcastsQuery,
     podcastDetail: podcastDetailQuery,
     token: tokenQuery,
+    favorites: favoritesQuery,
   },
   Mutation: {
     like: likeMutation,
