@@ -1,4 +1,5 @@
 import "dotenv/config";
+import { Request } from "express";
 import { ApolloServer } from "apollo-server";
 
 import resolvers from "./graphql";
@@ -14,7 +15,7 @@ const init = async () => {
     typeDefs: typeDefs,
     resolvers: resolvers,
     introspection: true,
-    context: ({ req }) => {
+    context: ({ req }: { req: Request }) => {
       const token = req.headers.authorization;
 
       const user = db.getUserByToken(token);
