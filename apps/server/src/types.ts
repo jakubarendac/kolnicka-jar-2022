@@ -103,7 +103,7 @@ export interface Episode {
 }
 
 // Dev
-interface IContext {
+export interface IContext {
   dataSources: {
     podcastData: PodcastDataSource;
   };
@@ -115,3 +115,9 @@ export type Action<A = unknown, P = unknown, R = unknown> = (
   context: IContext,
   info: unknown
 ) => R;
+
+export interface IUser {
+  userName: string;
+  token: string;
+  podcast: PodcastDetail[];
+}
