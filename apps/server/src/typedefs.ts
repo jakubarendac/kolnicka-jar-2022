@@ -118,7 +118,7 @@ export const PodcastDetailType = gql`
 export const Query = gql`
   type Query {
     search(q: String!, next_offset: Int): SearchResult!
-    podcastDetail(id: String!): PodcastDetail
+    podcastDetail(id: String!, next_episode_pub_date: Float): PodcastDetail
   }
 `;
 

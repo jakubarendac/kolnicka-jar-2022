@@ -11,10 +11,14 @@ const searchQuery: Action<SearchQueryArgs> = (_, args, context) => {
 
 interface PodcastDetailArgs {
   id: string;
+  next_episode_pub_date?: number;
 }
 
 const podcastDetailQuery: Action<PodcastDetailArgs> = (_, args, context) => {
-  return context.dataSources.podcastData.getPodcast(args.id);
+  return context.dataSources.podcastData.getPodcast(
+    args.id,
+    args.next_episode_pub_date
+  );
 };
 
 export const resolvers = {
