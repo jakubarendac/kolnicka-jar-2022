@@ -23,6 +23,7 @@ export const ResultsType = gql`
     listen_score: String
     listen_score_global_rank: String
     genre_ids: [Int]
+    is_favorite: Boolean!
   }
 `;
 
@@ -111,6 +112,7 @@ export const PodcastDetailType = gql`
     genre_ids: [Int]
     looking_for: LookingFor
     extra: Extra
+    is_favorite: Boolean!
   }
 `;
 
@@ -120,6 +122,13 @@ export const Query = gql`
     search(q: String!, next_offset: Int): SearchResult!
     podcastDetail(id: String!, next_episode_pub_date: Float): PodcastDetail
     login(userName: String!): String!
+    favorites: [PodcastDetail!]!
+  }
+`;
+
+export const Mutation = gql`
+  type Mutation {
+    favorite(id: String!): Boolean
   }
 `;
 
@@ -131,4 +140,5 @@ export const typeDefs = [
   ExtraType,
   LookingForType,
   EpisodesType,
+  Mutation,
 ];

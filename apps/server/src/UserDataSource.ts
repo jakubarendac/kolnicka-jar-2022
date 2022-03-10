@@ -40,4 +40,30 @@ export class UserDataSource extends DataSource {
   getUserByToken(token: string): IUser | null | undefined {
     return this.db.get(token);
   }
+
+  async togglePodcastFavorite(id: string): Promise<boolean> {
+    if (!this.context.user) {
+      return;
+    }
+
+    const podcast = this.context.user?.podcast.find((p) => p.id === id);
+
+    if (podcast) {
+      this.db.set(this.context.user.token, {
+        ...this.context.user,
+        podcast: this.context.user.podcast.filter((p) => p.id !== id),
+      });
+
+      return false;
+    } else {
+      const podcastDetail =
+        await this.context.dataSources.podcastData.getPodcast(id);
+
+      this.context.user.podcast.push(podcastDetail);
+
+      this.db.set(this.context.user.token, this.context.user);
+
+      return true;
+    }
+  }
 }
