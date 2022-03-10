@@ -1,5 +1,6 @@
 import { gql, useLazyQuery } from "@apollo/client";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const SEARCH = gql`
   query Search($q: String!) {
@@ -21,7 +22,9 @@ type Result = {
 };
 
 type SearchResponse = {
-  results: Result[];
+  search: {
+    results: Result[];
+  };
 };
 
 type SearchVariables = {
@@ -58,6 +61,15 @@ const Home = () => {
       <h1>Home</h1>
       <input value={searchText} onChange={handleSearchTextChange}></input>
       <button onClick={handleSearchClick}>Search</button>
+      <ul>
+        {searchData?.search.results.map((result) => {
+          return (
+            <li key={result.id}>
+              <Link to={`/podcasts/${result.id}`}>{result.title_original}</Link>
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 };
