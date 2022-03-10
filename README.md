@@ -49,7 +49,7 @@ Keď sa nachádzame v priečinku, pred prvým spustením projektu potrebujeme na
 ```bash
 npm install
 
-npm bootsrap
+npm run bootstrap
 ```
 
 Po inštalácií knižníc môžeme spustiť projekt. Do terminálu zadáme príkaz:
