@@ -31,7 +31,24 @@ const authLink = setContext((_, { headers }) => {
 
 const apolloClient = new ApolloClient({
   link: authLink.concat(httpLink),
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    typePolicies: {
+      Query: {
+        fields: {
+          search: {
+            keyArgs: false,
+            merge(existing = { results: [] }, incoming) {
+              return {
+                ...existing,
+                ...incoming,
+                results: [...existing.results, ...incoming.results],
+              };
+            },
+          },
+        },
+      },
+    },
+  }),
 });
 
 ReactDOM.render(
