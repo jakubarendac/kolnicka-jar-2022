@@ -1,34 +1,104 @@
-import React from "react";
-import { gql, useQuery } from "@apollo/client";
+import React, { useState } from "react";
+import { gql, useLazyQuery } from "@apollo/client";
 
 import logo from "./logo.svg";
 import "./App.css";
+import { TOKEN } from "./index";
 
-const BOOKS = gql`
-  query ExampleQuery {
-    books {
-      title
-      author
+const LOGIN = gql`
+  query Login($userName: String!) {
+    login(userName: $userName)
+  }
+`;
+
+const SEARCH = gql`
+  query Search($q: String!) {
+    search(q: $q) {
+      results {
+        id
+        is_favorite
+        title_original
+      }
+      next_offset
     }
   }
 `;
 
-function Books() {
-  const { loading, error, data } = useQuery(BOOKS);
+const setAuthorizationToken = (token: string) => {
+  localStorage.setItem(TOKEN, token);
+};
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
+type Result = {
+  id: string;
+  title_original: string;
+  is_favorite: boolean;
+};
 
-  return data.books.map(({ title, author }: any) => (
-    <div key={title}>
-      <p>
-        {author}: {title}
-      </p>
-    </div>
-  ));
-}
+type SearchResponse = {
+  results: Result[];
+};
+
+type SearchVariables = {
+  q: string;
+};
+
+type AuthorizationVariables = {
+  userName: string;
+};
+
+type AuthorizationResponse = {
+  login: string;
+};
 
 function App() {
+  const [login, setLogin] = useState("");
+  const [searchText, setSearchText] = useState("");
+
+  const [authorize] = useLazyQuery<
+    AuthorizationResponse,
+    AuthorizationVariables
+  >(LOGIN, {
+    variables: {
+      userName: login,
+    },
+    onCompleted: (data) => {
+      setAuthorizationToken(data.login);
+    },
+  });
+
+  const [search, { data: searchData }] = useLazyQuery<
+    SearchResponse,
+    SearchVariables
+  >(SEARCH, {
+    variables: {
+      q: searchText,
+    },
+  });
+
+  console.log({ searchData });
+
+  const handleLoginChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+
+    setLogin(value);
+  };
+
+  const handleLoginClick = () => {
+    authorize();
+  };
+
+  const handleSearchTextChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const { value } = event.target;
+
+    setSearchText(value);
+  };
+
+  const handleSearchClick = () => {
+    search();
+  };
+
   return (
     <div className="App">
       <header className="App-header">
@@ -36,18 +106,11 @@ function App() {
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <div>
-          GQL response:
-          <Books />
-        </div>
+        <input value={login} onChange={handleLoginChange}></input>
+        <button onClick={handleLoginClick}>Login</button>
+
+        <input value={searchText} onChange={handleSearchTextChange}></input>
+        <button onClick={handleSearchClick}>Search</button>
       </header>
     </div>
   );
