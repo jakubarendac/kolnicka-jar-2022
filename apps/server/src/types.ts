@@ -109,6 +109,7 @@ export interface IContext {
     podcastData: PodcastDataSource;
     userData: UserDataSource;
   };
+  user?: IUser | null;
 }
 
 export type Action<A = unknown, P = unknown, R = unknown> = (

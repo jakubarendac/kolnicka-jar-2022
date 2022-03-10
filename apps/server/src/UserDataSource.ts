@@ -3,7 +3,7 @@ import path from "path";
 import JSONDB from "simple-json-db";
 import { DataSource, DataSourceConfig } from "apollo-datasource";
 
-import { IContext } from "./types";
+import { IContext, IUser } from "./types";
 
 export class UserDataSource extends DataSource {
   context: IContext;
@@ -35,5 +35,9 @@ export class UserDataSource extends DataSource {
 
       return newToken;
     }
+  }
+
+  getUserByToken(token: string): IUser | null | undefined {
+    return this.db.get(token);
   }
 }

@@ -1,3 +1,5 @@
+import { AuthenticationError } from "apollo-server";
+
 import { Action } from "./types";
 
 interface SearchQueryArgs {
@@ -6,6 +8,10 @@ interface SearchQueryArgs {
 }
 
 const searchQuery: Action<SearchQueryArgs> = (_, args, context) => {
+  if (!context.user) {
+    throw new AuthenticationError("Unauthorized");
+  }
+
   return context.dataSources.podcastData.getSearch(args.q, args.next_offset);
 };
 
