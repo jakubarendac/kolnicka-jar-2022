@@ -11,7 +11,7 @@ export class UserDataSource extends DataSource {
 
   constructor() {
     super();
-    this.db = new JSONDB(path.join(__dirname, "data", "userdata.json"));
+    this.db = new JSONDB(path.join(__dirname, "data", "userdata.jsondb"));
   }
 
   override initialize(

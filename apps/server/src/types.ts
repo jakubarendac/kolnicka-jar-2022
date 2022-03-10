@@ -1,4 +1,5 @@
 import { PodcastDataSource } from "./PodcastApi";
+import { UserDataSource } from "./UserDataSource";
 
 export interface SearchResult {
   count: number;
@@ -106,6 +107,7 @@ export interface Episode {
 export interface IContext {
   dataSources: {
     podcastData: PodcastDataSource;
+    userData: UserDataSource;
   };
 }
 

@@ -21,9 +21,18 @@ const podcastDetailQuery: Action<PodcastDetailArgs> = (_, args, context) => {
   );
 };
 
+interface LoginArgs {
+  userName: string;
+}
+
+const loginQuery: Action<LoginArgs> = (_, args, context) => {
+  return context.dataSources.userData.getUserToken(args.userName);
+};
+
 export const resolvers = {
   Query: {
     search: searchQuery,
     podcastDetail: podcastDetailQuery,
+    login: loginQuery,
   },
 };
