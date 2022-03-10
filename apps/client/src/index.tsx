@@ -1,21 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 
-import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-
-const apolloClient = new ApolloClient({
-  uri: process.env.REACT_APP_APOLLO_SERVER_URL || "http://localhost:4000/",
-  cache: new InMemoryCache(),
-});
+import "./index.css";
 
 ReactDOM.render(
   <React.StrictMode>
-    <ApolloProvider client={apolloClient}>
-      <App />
-    </ApolloProvider>
+    <App />
   </React.StrictMode>,
   document.getElementById("root")
 );

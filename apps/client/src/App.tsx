@@ -1,55 +1,47 @@
 import React from "react";
-import { gql, useQuery } from "@apollo/client";
+import { ApolloProvider } from "@apollo/client";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import logo from "./logo.svg";
-import "./App.css";
-
-const BOOKS = gql`
-  query ExampleQuery {
-    books {
-      title
-      author
-    }
-  }
-`;
-
-function Books() {
-  const { loading, error, data } = useQuery(BOOKS);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
-
-  return data.books.map(({ title, author }: any) => (
-    <div key={title}>
-      <p>
-        {author}: {title}
-      </p>
-    </div>
-  ));
-}
+import client from "./apollo";
+import { AuthorizationProvider } from "./contexts/AuthorizationContext";
+import Home from "./routes/Home";
+import Login from "./routes/Login";
+import Podcast from "./routes/Podcast";
+import Podcasts from "./routes/Podcasts";
+import Favorites from "./routes/Favarites";
+import AuthorizationProtected from "./components/AuthorizationProtected/AuthorizationProtected";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <div>
-          GQL response:
-          <Books />
-        </div>
-      </header>
-    </div>
+    <AuthorizationProvider>
+      <ApolloProvider client={client}>
+        <BrowserRouter>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <AuthorizationProtected>
+                  <Home />
+                </AuthorizationProtected>
+              }
+            >
+              <Route path="/podcasts" element={<Podcasts />} />
+              <Route path="/favorites" element={<Favorites />} />
+              <Route path="/podcasts/:podcastId" element={<Podcast />}></Route>
+            </Route>
+            <Route path="/login" element={<Login />} />
+            <Route
+              path="*"
+              element={
+                <main style={{ padding: "1rem" }}>
+                  <p>Nothing here!</p>
+                </main>
+              }
+            />
+          </Routes>
+        </BrowserRouter>
+      </ApolloProvider>
+    </AuthorizationProvider>
   );
 }
 
